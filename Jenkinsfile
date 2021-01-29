@@ -1,26 +1,23 @@
-pipeline {
-    agent any
+pipeline { 
+    agent any 
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage("build") {
-        
-            steps {
-                echo 'building the application'
+        stage('Build') { 
+            steps { 
+                sh 'make' 
             }
         }
-
-       stage("test") {
+        stage('Test'){
             steps {
-                echo 'testing the application'           
+                sh 'make check'
+                junit 'reports/**/*.xml' 
             }
         }
-
-        stage("deploy") {
+        stage('Deploy') {
             steps {
-                echo 'deploying the application'
-
-            }
-            stage('Email Notification'){
-               mail bcc: '', body: 'Email settings worked', cc: '', from: '', replyTo: '', subject: 'Testing Conf', to: 'battosai864@gmail.com'
+                sh 'make publish'
             }
         }
     }
