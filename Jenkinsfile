@@ -19,6 +19,9 @@ pipeline {
                 echo 'deploying the application'
 
             }
+            stage('Email Notification'){
+               mail bcc: '', body: 'Email settings worked', cc: '', from: '', replyTo: '', subject: 'Testing Conf', to: 'battosai864@gmail.com'
+            }
         }
     }
 }
